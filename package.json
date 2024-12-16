@@ -1,0 +1,19 @@
+{
+  "name": "qa-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test --headed"
+  },
+  "keywords": [],
+  "author": "Milan Karadeglic",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  },
+  "dependencies": {
+    "unique-names-generator": "^4.7.1"
+  }
+}
