@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { newPet } from "../../data/petData";
 
 test("DELETE /pet/{petId} - Delete Pet", async ({ request }) => {
   // Initialize POST request with headers and body
@@ -10,17 +11,17 @@ test("DELETE /pet/{petId} - Delete Pet", async ({ request }) => {
       id: 103,
       category: {
         id: 0,
-        name: "Swiss shepherd",
+        name: newPet.category,
       },
-      name: "Zeus",
-      photoUrls: ["string"],
+      name: newPet.name,
+      photoUrls: [newPet.url],
       tags: [
         {
           id: 0,
-          name: "White",
+          name: newPet.tag,
         },
       ],
-      status: "available",
+      status: newPet.status,
     },
   });
 

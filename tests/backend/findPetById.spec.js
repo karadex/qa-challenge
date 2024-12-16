@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { newPet } from "../../data/petData";
 
 test("GET /pet/{petId} - Find Pet by ID", async ({ request }) => {
   // Initialize POST request with headers and body
@@ -10,19 +11,23 @@ test("GET /pet/{petId} - Find Pet by ID", async ({ request }) => {
       id: 101,
       category: {
         id: 0,
-        name: "Swiss shepherd",
+        name: newPet.category,
       },
-      name: "Zeus",
-      photoUrls: ["string"],
+      name: newPet.name,
+      photoUrls: [newPet.url],
       tags: [
         {
           id: 0,
-          name: "White",
+          name: newPet.tag,
         },
       ],
-      status: "available",
+      status: newPet.status,
     },
   });
+
+  // Assert response details
+  expect(postResponse.ok()).toBeTruthy();
+  expect(postResponse.status()).toBe(200);
 
   const postResponseBody = await postResponse.json();
 
@@ -34,10 +39,11 @@ test("GET /pet/{petId} - Find Pet by ID", async ({ request }) => {
   const getResponseBody = await getResponse.json();
 
   // Assert response details
-  expect(postResponse.ok()).toBeTruthy();
-  expect(postResponse.status()).toBe(200);
+  expect(getResponse.ok()).toBeTruthy();
+  expect(getResponse.status()).toBe(200);
   expect(getResponseBody.id).toBe(101);
-  expect(getResponseBody.category.name).toBe("Swiss shepherd");
-  expect(getResponseBody.tags[0].name).toBe("White");
-  expect(getResponseBody.status).toBe("available");
+  expect(getResponseBody.category.name).toBe(newPet.category);
+  expect(getResponseBody.name).toBe(newPet.name);
+  expect(getResponseBody.tags[0].name).toBe(newPet.tag);
+  expect(getResponseBody.status).toBe(newPet.status);
 });

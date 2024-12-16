@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { newPet, updatePet } from "../../data/petData";
 
 test("PUT /pet - Update Existing Pet", async ({ request }) => {
   // Initialize POST request with headers and body
@@ -10,17 +11,17 @@ test("PUT /pet - Update Existing Pet", async ({ request }) => {
       id: 102,
       category: {
         id: 0,
-        name: "Swiss shepherd",
+        name: newPet.category,
       },
-      name: "Zeus",
-      photoUrls: ["string"],
+      name: newPet.name,
+      photoUrls: [newPet.url],
       tags: [
         {
           id: 0,
-          name: "White",
+          name: newPet.tag,
         },
       ],
-      status: "available",
+      status: newPet.status,
     },
   });
 
@@ -37,17 +38,17 @@ test("PUT /pet - Update Existing Pet", async ({ request }) => {
       id: 102,
       category: {
         id: 0,
-        name: "Swiss shepherd update",
+        name: updatePet.category,
       },
-      name: "Zeus",
-      photoUrls: ["string"],
+      name: updatePet.name,
+      photoUrls: [updatePet.url],
       tags: [
         {
           id: 0,
-          name: "White update",
+          name: updatePet.tag,
         },
       ],
-      status: "Not available",
+      status: updatePet.status,
     },
   });
 
@@ -57,7 +58,8 @@ test("PUT /pet - Update Existing Pet", async ({ request }) => {
   expect(putResponse.ok()).toBeTruthy();
   expect(putResponse.status()).toBe(200);
   expect(putResponseBody.id).toBe(102);
-  expect(putResponseBody.category.name).toBe("Swiss shepherd update");
-  expect(putResponseBody.tags[0].name).toBe("White update");
-  expect(putResponseBody.status).toBe("Not available");
+  expect(putResponseBody.category.name).toBe(updatePet.category);
+  expect(putResponseBody.name).toBe(updatePet.name);
+  expect(putResponseBody.tags[0].name).toBe(updatePet.tag);
+  expect(putResponseBody.status).toBe(updatePet.status);
 });

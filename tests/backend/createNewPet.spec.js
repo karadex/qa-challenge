@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { newPet } from "../../data/petData";
 
 test("POST /pet - Create New Pet", async ({ request }) => {
   // Initialize POST request with headers and body
@@ -10,17 +11,17 @@ test("POST /pet - Create New Pet", async ({ request }) => {
       id: 100,
       category: {
         id: 0,
-        name: "Swiss shepherd",
+        name: newPet.category,
       },
-      name: "Zeus",
-      photoUrls: ["string"],
+      name: newPet.name,
+      photoUrls: [newPet.url],
       tags: [
         {
           id: 0,
-          name: "White",
+          name: newPet.tag,
         },
       ],
-      status: "available",
+      status: newPet.status,
     },
   });
 
@@ -30,7 +31,8 @@ test("POST /pet - Create New Pet", async ({ request }) => {
   expect(response.ok()).toBeTruthy();
   expect(response.status()).toBe(200);
   expect(responseBody.id).toBe(100);
-  expect(responseBody.category.name).toBe("Swiss shepherd");
-  expect(responseBody.tags[0].name).toBe("White");
-  expect(responseBody.status).toBe("available");
+  expect(responseBody.category.name).toBe(newPet.category);
+  expect(responseBody.name).toBe(newPet.name);
+  expect(responseBody.tags[0].name).toBe(newPet.tag);
+  expect(responseBody.status).toBe(newPet.status);
 });
